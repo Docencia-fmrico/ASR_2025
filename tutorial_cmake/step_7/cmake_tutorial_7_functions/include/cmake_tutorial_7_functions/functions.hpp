@@ -1,7 +1,8 @@
 #include "opencv2/opencv.hpp"
 #include "std_msgs/msg/string.hpp"
 
-namespace cmake_tutorial_8 {
+namespace cmake_tutorial_8
+{
 
 double duplica(double value_in);
 void show_image(cv::Mat & image);

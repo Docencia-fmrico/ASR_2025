@@ -1,12 +1,14 @@
 hsv_filter_node:
   ros__parameters:
     use_sim_time: true
-    min_h: 5
-    max_h: 27
+    min_h: 93
+    max_h: 103
     min_s: 0
     max_s: 255
     min_v: 0
     max_v: 255
+    kernel_size: 50
+    kernel_shape: 1 # 0: rectangle, 1: ellipse, 2: cross
 
 detection_to_3d_from_depth_node:
   ros__parameters:

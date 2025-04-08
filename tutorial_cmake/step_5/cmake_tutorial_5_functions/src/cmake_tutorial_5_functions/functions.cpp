@@ -1,6 +1,7 @@
 #include "cmake_tutorial_5_functions/functions.hpp"
 
-namespace cmake_tutorial_5 {
+namespace cmake_tutorial_5
+{
 
 double duplica(double value_in)
 {
@@ -9,7 +10,7 @@ double duplica(double value_in)
 
 void show_image(cv::Mat & image)
 {
-  cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
+  cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
   cv::imshow("Display Image", image);
   cv::waitKey(0);
 }

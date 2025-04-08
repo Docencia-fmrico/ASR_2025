@@ -19,19 +19,18 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    bumpgo_cmd = Node(
-        package='bt_bumpgo',
-        executable='bt_bumpgo',
-        name='bt_bumpgo',
+    hybrid_cmd = Node(
+        package='hybrid',
+        executable='hybrid_behavior',
         output='screen',
         remappings=[
             ('/output_vel', '/cmd_vel'),
-            ('/input_scan', '/scan')
+            ('/input_scan', '/scan_raw')
         ],
         parameters=[
             {'use_sim_time': True}
         ])
 
     ld = LaunchDescription()
-    ld.add_action(bumpgo_cmd)
+    ld.add_action(hybrid_cmd)
     return ld

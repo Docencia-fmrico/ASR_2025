@@ -3,7 +3,7 @@
 <package format="3">
   <name>node_programming</name>
   <version>0.0.1</version>
-  <description>Examples nodes for ASR 2024</description>
+  <description>Examples nodes for ASR</description>
   <maintainer email="fmrico@gmail.com">fmrico</maintainer>
   <license>Apache License, Version 2.0</license>
 

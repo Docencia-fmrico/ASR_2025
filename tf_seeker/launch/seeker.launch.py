@@ -25,13 +25,13 @@ from launch_ros.actions import Node
 def generate_launch_description():
     tf_seeker_dir = get_package_share_directory('tf_seeker')
 
-    kobuki_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(
-            get_package_share_directory('kobuki'),
-            'launch',
-            'simulation.launch.py')),
-        launch_arguments={'world': tf_seeker_dir + '/worlds/empty.world'}.items()
-        )
+    # kobuki_cmd = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(os.path.join(
+    #         get_package_share_directory('kobuki'),
+    #         'launch',
+    #         'simulation.launch.py')),
+    #     launch_arguments={'world': tf_seeker_dir + '/worlds/empty.world'}.items()
+    #     )
 
     tf_publisher_cmd = Node(
         package='tf_seeker',
@@ -67,6 +67,6 @@ def generate_launch_description():
     ld.add_action(tf_publisher_cmd)
     ld.add_action(seeker_cmd)
     ld.add_action(rviz2_cmd)
-    ld.add_action(kobuki_cmd)
+    # ld.add_action(kobuki_cmd)
 
     return ld

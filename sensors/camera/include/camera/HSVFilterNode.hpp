@@ -54,6 +54,8 @@ private:
   int h_ {0}, s_ {0}, v_ {0};
   int H_ {180}, S_ {255}, V_ {255};
 
+  int kernel_size_, kernel_shape_;
+
   image_transport::Subscriber image_sub_;
   rclcpp::Subscription<sensor_msgs::msg::CameraInfo>::SharedPtr camera_info_sub_;
   rclcpp::Publisher<vision_msgs::msg::Detection2DArray>::SharedPtr detection_pub_;

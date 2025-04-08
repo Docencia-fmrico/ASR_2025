@@ -14,50 +14,44 @@
 
 #include <string>
 #include <iostream>
-#include <vector>
 
-#include "bt_nav/GetWaypoint.hpp"
+#include "bt_bumpgo/Forward.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/pose_stamped.hpp"
-
+#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace bt_nav
+namespace bt_bumpgo
 {
 
-GetWaypoint::GetWaypoint(
+using namespace std::chrono_literals;
+
+Forward::Forward(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
 : BT::ActionNodeBase(xml_tag_name, conf)
 {
-  rclcpp::Node::SharedPtr node;
-  config().blackboard->get("node", node);
+  config().blackboard->get("node", node_);
 
-  wp_.header.frame_id = "map";
-  wp_.pose.orientation.w = 1.0;
-
-  wp_.pose.position.x = 3.67;
-  wp_.pose.position.y = -0.24;
-}
-
-void
-GetWaypoint::halt()
-{
+  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/output_vel", 100);
 }
 
 BT::NodeStatus
-GetWaypoint::tick()
+Forward::tick()
 {
-  setOutput("waypoint", wp_);
-  return BT::NodeStatus::SUCCESS;
+  geometry_msgs::msg::Twist vel_msgs;
+  vel_msgs.linear.x = 0.3;
+  vel_pub_->publish(vel_msgs);
+
+  RCLCPP_INFO_ONCE(node_->get_logger(), "Moving forward at %.2f m/s", vel_msgs.linear.x);
+  return BT::NodeStatus::RUNNING;
 }
 
-}  // namespace bt_nav
+}  // namespace bt_bumpgo
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<bt_nav::GetWaypoint>("GetWaypoint");
+  factory.registerNodeType<bt_bumpgo::Forward>("Forward");
 }

@@ -14,44 +14,50 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
-#include "bt_bumpgo/Forward.hpp"
+#include "bt_nav/GetWaypoint.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/twist.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
+
 #include "rclcpp/rclcpp.hpp"
 
-namespace bt_bumpgo
+namespace bt_nav
 {
 
-using namespace std::chrono_literals;
-
-Forward::Forward(
+GetWaypoint::GetWaypoint(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
 : BT::ActionNodeBase(xml_tag_name, conf)
 {
-  config().blackboard->get("node", node_);
+  rclcpp::Node::SharedPtr node;
+  config().blackboard->get("node", node);
 
-  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/output_vel", 100);
+  wp_.header.frame_id = "map";
+  wp_.pose.orientation.w = 1.0;
+
+  wp_.pose.position.x = -4.0;
+  wp_.pose.position.y = 0.0;
+}
+
+void
+GetWaypoint::halt()
+{
 }
 
 BT::NodeStatus
-Forward::tick()
+GetWaypoint::tick()
 {
-  geometry_msgs::msg::Twist vel_msgs;
-  vel_msgs.linear.x = 0.3;
-  vel_pub_->publish(vel_msgs);
-
-  RCLCPP_INFO(node_->get_logger(), "Moving forward");
-  return BT::NodeStatus::RUNNING;
+  setOutput("waypoint", wp_);
+  return BT::NodeStatus::SUCCESS;
 }
 
-}  // namespace bt_bumpgo
+}  // namespace bt_nav
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<bt_bumpgo::Forward>("Forward");
+  factory.registerNodeType<bt_nav::GetWaypoint>("GetWaypoint");
 }

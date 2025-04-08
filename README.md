@@ -28,4 +28,3 @@ colcon build --symlink-install
 ```
 
 for installint the kobuki driver and simulator, go to https://github.com/IntelligentRoboticsLabs/kobuki
-

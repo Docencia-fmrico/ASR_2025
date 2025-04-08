@@ -21,8 +21,8 @@ namespace tf_seeker
 
 PIDController::PIDController(double min_ref, double max_ref, double min_output, double max_output)
 {
-  min_ref_ = min_ref;
-  max_ref_ = max_ref;
+  min_ref_ = min_ref; // In case the reference is less than min_ref_, the output will be 0.0
+  max_ref_ = max_ref; // In case the reference is greater than max_ref_, the output will be max_output_
   min_output_ = min_output;
   max_output_ = max_output;
   prev_error_ = int_error_ = 0.0;

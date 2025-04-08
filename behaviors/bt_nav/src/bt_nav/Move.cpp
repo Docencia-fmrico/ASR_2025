@@ -30,8 +30,10 @@ Move::on_tick()
 {
   geometry_msgs::msg::PoseStamped goal;
   getInput("goal", goal);
+  RCLCPP_INFO(node_->get_logger(), "Move: %.2f %.2f", goal.pose.position.x, goal.pose.position.y);
 
   goal_.pose = goal;
+  goal.header.frame_id = "map";
 }
 
 BT::NodeStatus

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="GetWaypoint" waypoint="{wp}"/>
+            <Action ID="Move" goal="{wp}"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="GetWaypoint">
+            <output_port name="waypoint"/>
+        </Action>
+        <Action ID="Move">
+            <input_port name="goal"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
